@@ -31,7 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 CUSTOM_APP = [
-    "tweets.apps.TweetsConfig"
+    "tweets.apps.TweetsConfig",
+    "users.apps.UsersConfig"
 ]
 
 INSTALLED_APPS = [
@@ -115,7 +116,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'users.User'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 

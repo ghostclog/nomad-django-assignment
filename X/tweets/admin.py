@@ -17,8 +17,8 @@ class TweetAdmin(admin.ModelAdmin):
     )
     readonly_fields = ("created_at", "updated_at")
 
-    list_display = ("user", "payload", "created_at", "updated_at")
-    search_fields = ("user__user_nickname", "payload")
+    list_display = ("user", "payload", "like_tweets", "created_at", "updated_at")
+    search_fields = ("user__user_nickname", "payload","like_tweets")
 
 
 @admin.register(Like)

@@ -14,7 +14,7 @@ class Tweet(AbstractModel):
     payload = models.CharField(max_length=180)
     user = models.ForeignKey(
         "users.User",
-        related_name="tweet",
+        related_name="tweets",
         on_delete=models.CASCADE
     )
 
@@ -22,17 +22,17 @@ class Tweet(AbstractModel):
         return self.payload
     
     def like_tweets(self):
-        return self.like.count()
+        return self.likes.count()
 
 class Like(AbstractModel):
     tweet = models.ForeignKey(
         "tweets.Tweet",
-        related_name="like",
+        related_name="likes",
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
         "users.User",
-        related_name="like",
+        related_name="likes",
         on_delete=models.CASCADE
     )
 

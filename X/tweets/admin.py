@@ -1,5 +1,25 @@
 from django.contrib import admin
 from .models import Tweet,Like
+from django.utils.translation import gettext_lazy
+
+class KeywordFilter(admin.SimpleListFilter):
+    title = "Filter by keywords!"
+
+    parameter_name = "filter_keyword"
+
+    def lookups(self, request, model_admin):
+        return [
+            ("contain", 'Contains "Elon Musk"'),
+            ("not_contain", 'Does not contain "Elon Musk"'),
+        ]
+
+    def queryset(self, request, tweet):
+        keyword = "Elon Musk"
+        if self.value() == 'contain':
+            return tweet.filter(payload__icontains=keyword)
+        elif self.value() == 'not_contain':
+            return tweet.exclude(payload__icontains=keyword)
+        return tweet
 
 @admin.register(Tweet)
 class TweetAdmin(admin.ModelAdmin):
@@ -16,9 +36,9 @@ class TweetAdmin(admin.ModelAdmin):
         ),
     )
     readonly_fields = ("created_at", "updated_at")
-
-    list_display = ("user", "payload", "like_tweets", "created_at", "updated_at")
-    search_fields = ("user__user_nickname", "payload","like_tweets")
+    list_filter = ("created_at",KeywordFilter)
+    list_display = ("__str__","user", "payload", "like_tweets", "created_at", "updated_at")
+    search_fields = ("user__username","user__user_nickname", "payload")
 
 
 @admin.register(Like)
@@ -36,6 +56,6 @@ class LikeAdmin(admin.ModelAdmin):
         ),
     )
     readonly_fields = ("created_at", "updated_at")
-
-    list_display = ("user", "tweet", "created_at", "updated_at")
-    search_fields = ("user__user_nickname", "tweet__payload")
+    list_filter = ("created_at",)
+    list_display = ("__str__","user", "tweet", "created_at", "updated_at")
+    search_fields = ("user__username","user__user_nickname", "tweet__payload")

@@ -58,4 +58,4 @@ class LikeAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
     list_filter = ("created_at",)
     list_display = ("__str__","user", "tweet", "created_at", "updated_at")
-    search_fields = ("user__username","user__user_nickname", "tweet__payload")
+    search_fields = ("user__username","user__user_nickname",)
